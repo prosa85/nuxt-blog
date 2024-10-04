@@ -1,36 +1,37 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
+import vuetify, { transformAssetUrls } from "vite-plugin-vuetify";
 
 export default defineNuxtConfig({
-  devtools: {
-    enabled: true,
+    devtools: {
+        enabled: true,
 
-    timeline: {
-      enabled: true,
+        timeline: {
+            enabled: true,
+        },
     },
-  },
 
-  routeRules: {
-    // prerender index route by default
-    '/': { prerender: true },
-    
-  },
-  build: {
-    transpile: ['vuetify'],
-  },
-  modules: ['@nuxtjs/sanity',
-    (_options, nuxt) => {
-      nuxt.hooks.hook('vite:extendConfig', (config) => {
-        // @ts-expect-error
-        config.plugins.push(vuetify({ autoImport: true }))
-      })
+    routeRules: {
+        // prerender index route by default
+        "/": { prerender: true },
+        "/blog/**": { prerender: true },
     },
-  ],
-  vite: {
-    vue: {
-      template: {
-        transformAssetUrls,
-      },
+    build: {
+        transpile: ["vuetify"],
     },
-  },
+    modules: [
+        "@nuxtjs/sanity",
+        (_options, nuxt) => {
+            nuxt.hooks.hook("vite:extendConfig", (config) => {
+                // @ts-expect-error
+                config.plugins.push(vuetify({ autoImport: true }));
+            });
+        },
+    ],
+    vite: {
+        vue: {
+            template: {
+                transformAssetUrls,
+            },
+        },
+    },
 });

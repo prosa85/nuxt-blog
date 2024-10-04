@@ -1,16 +1,7 @@
 <template>
-  <div>
-    <v-toolbar image="https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg" dark prominent>
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
-
-      <v-toolbar-title>
-        <router-link to="/">
-          Altruist
-        </router-link>
-      </v-toolbar-title>
-
-      <v-spacer></v-spacer>
-     
-    </v-toolbar>
-  </div>
+  <v-app-bar image="" theme="light">
+    <router-link to="/">
+      <v-img width="150px" class="ml-3" src="/assets/Altruist-logo_full-color-1.webp" to="/"></v-img>
+    </router-link>
+  </v-app-bar>
 </template>

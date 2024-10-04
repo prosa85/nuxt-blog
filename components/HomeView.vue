@@ -10,24 +10,24 @@
         <PostCard :post="post" :firstCard="index == 0 ? true : false" />
       </v-col>
     </v-row>
-    <v-container v-show="total > 1">
-      <v-row>
-        <v-col>
-          <v-bottom-navigation v-model="value" color="primary" active>
-            <v-btn :disabled="page == 1" @click="paginationBack()">
-              <v-icon>mdi-arrow-left</v-icon>
-            </v-btn>
-            <v-btn class="text-h6" disabled>
-              {{ page }}
+  </v-container>
+  <v-container class="mt-4" v-show="total > 1">
+    <v-row>
+      <v-col>
+        <v-bottom-navigation v-model="value" color="primary" active>
+          <v-btn :disabled="page == 1" @click="paginationBack()">
+            <v-icon>mdi-arrow-left</v-icon>
+          </v-btn>
+          <v-btn class="text-h6" disabled>
+            {{ page }}
 
-            </v-btn>
-            <v-btn @click="paginationForward()" :disabled="page >= total || loading">
-              <v-icon>mdi-arrow-right</v-icon>
-            </v-btn>
-          </v-bottom-navigation>
-        </v-col>
-      </v-row>
-    </v-container>
+          </v-btn>
+          <v-btn @click="paginationForward()" :disabled="page >= total || loading">
+            <v-icon>mdi-arrow-right</v-icon>
+          </v-btn>
+        </v-bottom-navigation>
+      </v-col>
+    </v-row>
   </v-container>
 
 </template>

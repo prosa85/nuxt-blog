@@ -1,17 +1,14 @@
 <template>
-
   <v-app>
     <Nav />
-    <v-main class="content-container">
-      <Nuxt-page />
-    </v-main>
-
-    <!-- <AppFooter /> -->
+    <v-container class="content-container">
+      <Nuxt-page></Nuxt-page>
+    </v-container>
   </v-app>
 </template>
 
 <script setup>
-//
+
 </script>
 <style>
 .content {
