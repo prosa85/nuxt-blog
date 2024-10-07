@@ -24,31 +24,31 @@
 
 <script>
 import { PortableText } from '@portabletext/vue';
-import sanity from "../../client";
 import imageUrlBuilder from "@sanity/image-url";
 
-const imageBuilder = imageUrlBuilder(sanity);
+
 
 const query = `*[slug.current == $slug] {
   _id,
   title,
   slug,
   body, 
- "image": mainImage{
-  asset->{
-  _id,
-  url
-}
-},
-"author":author->{name, image}
-}[0]
-`;
+  "image": mainImage{
+    asset->{
+      _id,
+      url
+      }
+      },
+      "author":author->{name, image}
+      }[0]
+      `;
 
 export default {
   name: "SinglePost",
   components: { PortableText },
   data() {
     return {
+      sanity: useSanity(),
       loading: true,
       post: [],
       blocks: [],
@@ -60,13 +60,14 @@ export default {
   },
   methods: {
     imageUrlFor(source) {
-      return imageBuilder.image(source);
+      return imageUrlBuilder(this.sanity.config).image(source);
     },
     fetchData() {
+
       this.error = this.post = null;
       this.loading = true;
 
-      sanity.fetch(query, { slug: this.$route.params.SinglePost }).then(
+      this.sanity.fetch(query, { slug: this.$route.params.SinglePost }).then(
         (post) => {
           this.loading = false;
           this.post = post;

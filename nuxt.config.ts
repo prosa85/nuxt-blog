@@ -9,11 +9,15 @@ export default defineNuxtConfig({
             enabled: true,
         },
     },
-
+    nitro: {
+        prerender: {
+            crawlLinks: true,
+            routes: ["/"],
+        },
+    },
     routeRules: {
         // prerender index route by default
         "/": { prerender: true },
-        "/blog/**": { prerender: true },
     },
     build: {
         transpile: ["vuetify"],
@@ -27,6 +31,11 @@ export default defineNuxtConfig({
             });
         },
     ],
+    sanity: {
+        projectId: "ombs0vlk",
+        dataset: "vueproject",
+        apiVersion: "2022-03-25",
+    },
     vite: {
         vue: {
             template: {

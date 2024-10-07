@@ -33,7 +33,6 @@
 </template>
 
 <script>
-import sanity from "../client";
 
 const countTotal = `count(*[_type =='post'])`;
 const perPage = 5;
@@ -56,6 +55,7 @@ export default {
   name: "HomeView",
   data() {
     return {
+      sanity: useSanity(),
       loading: true,
       posts: [],
       page: 1,
@@ -66,7 +66,7 @@ export default {
   },
   created() {
     this.fetchData(firstQuery);
-    sanity.fetch(countTotal).then((count) => {
+    this.sanity.fetch(countTotal).then((count) => {
       this.numberPosts = count;
       this.total = Math.ceil(count / perPage);
     }, (error) => {
@@ -84,7 +84,7 @@ export default {
     fetchData(query) {
       this.error = this.post = null;
       this.loading = true;
-      sanity.fetch(query).then((posts) => {
+      this.sanity.fetch(query).then((posts) => {
         this.loading = false;
         this.posts[this.page] = posts;
       }, (error) => {
