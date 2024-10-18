@@ -6,7 +6,7 @@
   </div>
   <v-container v-else>
     <v-row>
-      <v-col :lg="index == 0 ? 12 : 6" md="12" v-for="(post, index ) in posts[page]" class="" :key="index">
+      <v-col :lg="index == 0 ? 12 : 6" sm="12" v-for="(post, index ) in posts[page]" class="" :key="index">
         <PostCard :post="post" :firstCard="index == 0 ? true : false" />
       </v-col>
     </v-row>
@@ -55,6 +55,7 @@ export default {
   name: "HomeView",
   data() {
     return {
+      sanity: useSanity(),
       loading: true,
       posts: [],
       page: 1,
