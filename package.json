@@ -2,9 +2,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "nuxt build",
+    "build": "nuxt build --prerender",
     "dev": "nuxt dev",
-    "generate": "nuxt generate",
+    "generate": "nuxt generate  --prerender",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },

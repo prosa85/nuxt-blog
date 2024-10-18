@@ -6,7 +6,7 @@
   </div>
   <v-container v-else>
     <v-row>
-      <v-col :lg="index == 0 ? 12 : 6" md="12" v-for="(post, index ) in posts[page]" class="" :key="post._id">
+      <v-col :lg="index == 0 ? 12 : 6" md="12" v-for="(post, index ) in posts[page]" class="" :key="index">
         <PostCard :post="post" :firstCard="index == 0 ? true : false" />
       </v-col>
     </v-row>
@@ -55,25 +55,23 @@ export default {
   name: "HomeView",
   data() {
     return {
-      sanity: useSanity(),
       loading: true,
       posts: [],
       page: 1,
       total: 0,
       numberPosts: 0,
-      key: process.env.SANITY_PROJECT
     };
   },
   created() {
-    this.fetchData(firstQuery);
-    this.sanity.fetch(countTotal).then((count) => {
-      this.numberPosts = count;
-      this.total = Math.ceil(count / perPage);
-    }, (error) => {
-      console.log("error pulling count");
+    useSanityQuery(countTotal).then((result, refresh) => {
+      this.numberPosts = result.data.value;
+      this.total = Math.ceil(this.numberPosts / perPage)
+    });
+    useSanityQuery(firstQuery).then((result2, refresh) => {
+      this.loading = false;
+      this.posts[this.page] = result2.data.value;
     });
   },
-  watch: {},
   methods: {
     paginationBack() {
       this.page = this.page - 1;
@@ -82,7 +80,6 @@ export default {
       this.fetchNextPosts();
     },
     fetchData(query) {
-      this.error = this.post = null;
       this.loading = true;
       this.sanity.fetch(query).then((posts) => {
         this.loading = false;

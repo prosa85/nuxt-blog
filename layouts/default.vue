@@ -7,8 +7,20 @@
   </v-app>
 </template>
 
-<script setup>
-
+<script setup lang="ts">
+useHead({
+  link: [
+    {
+      rel: 'preconnect',
+      href: 'https://cdn.sanity.io'
+    },
+    {
+      rel: 'stylesheet',
+      href: 'https://fonts.googleapis.com/css2?family=Roboto&display=swap',
+      crossorigin: ''
+    }
+  ]
+})
 </script>
 <style>
 .content {

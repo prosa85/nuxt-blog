@@ -2,11 +2,11 @@
   <v-container>
 
     <v-row>
-      <div class="loading" v-if="loading">Loading...</div>
+      <!-- <div class="loading" v-if="loading">Loading...</div>
 
       <div v-if="error" class="error">
         {{ error }}
-      </div>
+      </div> -->
 
       <v-col v-if="post" class="content">
         <h1 class="text-h3 w-lg-66">{{ post.title }}</h1>
@@ -43,6 +43,7 @@ const query = `*[slug.current == $slug] {
       }[0]
       `;
 
+
 export default {
   name: "SinglePost",
   components: { PortableText },
@@ -55,8 +56,10 @@ export default {
       authorImage: '',
     };
   },
-  created() {
+  async created() {
+
     this.fetchData();
+
   },
   methods: {
     imageUrlFor(source) {
@@ -67,12 +70,13 @@ export default {
       this.error = this.post = null;
       this.loading = true;
 
-      this.sanity.fetch(query, { slug: this.$route.params.SinglePost }).then(
+      useSanityQuery(query, { slug: this.$route.params.SinglePost }).then(
         (post) => {
           this.loading = false;
-          this.post = post;
-          this.authorImage = this.imageUrlFor(post.author.image).url()
-          this.blocks = post.body;
+          this.post = post.data;
+          this.authorImage = this.imageUrlFor(this.post.author.image).url()
+          // this.authorImage =
+          this.blocks = this.post.body;
         },
         (error) => {
           this.error = error;
@@ -80,6 +84,7 @@ export default {
       );
     },
   },
+
 };
 </script>
 

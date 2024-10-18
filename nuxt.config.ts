@@ -14,6 +14,24 @@ async function fetchSlugs() {
     return posts.map((post) => post.slug.current);
 }
 
+/**
+ * Nuxt configuration options.
+ *
+ * @remarks
+ * These options can be used to configure the behavior of Nuxt.js.
+ *
+ * @see {@link https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-target}
+ * @see {@link https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-devtools}
+ * @see {@link https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-nitro}
+ * @see {@link https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-route-rules}
+ * @see {@link https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-build}
+ * @see {@link https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-modules}
+ * @see {@link https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-vite}
+ * @see {@link https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-sanity}
+ * @see {@link https://vitejs.dev/config/}
+ *
+ * @returns The Nuxt configuration object.
+ */
 export default defineNuxtConfig(async () => {
     const slugs = await fetchSlugs();
     const dynamicRoutes = slugs.map((slug) => `/blog/${slug}`);
@@ -33,7 +51,8 @@ export default defineNuxtConfig(async () => {
             },
         },
         routeRules: {
-            "/": { prerender: true },
+            "/": { isr: true },
+            "/blog/**": { isr: true },
         },
         build: {
             transpile: ["vuetify"],
