@@ -3,15 +3,17 @@ import vuetify, { transformAssetUrls } from "vite-plugin-vuetify";
 import { createClient } from "@sanity/client";
 
 // Function to fetch slugs from Sanity
-async function fetchSlugs() {
-    const sanityClient = createClient({
-        projectId: "ombs0vlk",
-        dataset: "vueproject", // Replace with your Sanity dataset
-        useCdn: true,
-    });
-
+const sanityClient = createClient({
+    projectId: "ombs0vlk",
+    dataset: "vueproject", // Replace with your Sanity dataset
+    useCdn: true,
+});
+async function fetchPosts() {
     const posts = await sanityClient.fetch('*[_type == "post"]{slug}');
-    return posts.map((post) => post.slug.current);
+    const pages = await sanityClient.fetch('*[_type == "page"]{slug}');
+    const posturls = posts.map((post) => post.slug.current);
+    const pageurls = pages.map((page) => page.slug.current);
+    return [...posturls, ...pageurls];
 }
 
 /**
@@ -33,7 +35,7 @@ async function fetchSlugs() {
  * @returns The Nuxt configuration object.
  */
 export default defineNuxtConfig(async () => {
-    const slugs = await fetchSlugs();
+    const slugs = await fetchPosts();
     const dynamicRoutes = slugs.map((slug) => `/blog/${slug}`);
 
     return {
@@ -59,6 +61,7 @@ export default defineNuxtConfig(async () => {
         },
         modules: [
             "@nuxtjs/sanity",
+            "@nuxt/image",
             (_options, nuxt) => {
                 nuxt.hooks.hook("vite:extendConfig", (config) => {
                     config.plugins.push(vuetify({ autoImport: true }));
@@ -72,6 +75,10 @@ export default defineNuxtConfig(async () => {
                     styles: { configFile: "path/to/your/vuetify/styles.scss" },
                 }),
             ],
+        },
+        components: {
+            global: true,
+            dirs: ["~/components/modules", "~/components/"],
         },
         sanity: {
             projectId: "ombs0vlk",

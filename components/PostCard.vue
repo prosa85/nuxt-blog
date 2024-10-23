@@ -2,7 +2,10 @@
 
   <v-card v-if="po.slug" transition="fade-transition" :href="`/blog/${po.slug.current}`"
     :class="firstCard ? 'first-card' : ''">
-    <v-img class="mb-2" :src="po.image.asset.url" cover :height="firstCard ? 550 : 325"></v-img>
+
+    <v-img class="mb-2" :src="po.image.asset.url" cover :height="firstCard ? 550 : 325">
+      <!-- <NuxtImg :src="po.image.asset.url" sizes="100vw sm:50vw md:400px" /> -->
+    </v-img>
     <v-card-tile class="text-h5 ma-4 d-block"> {{ post.title }} </v-card-tile>
     <v-card-subtitle>By {{ po.author }}</v-card-subtitle>
     <v-card-text>{{ po.excerpt }}</v-card-text>
