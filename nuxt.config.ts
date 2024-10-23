@@ -10,12 +10,14 @@ const sanityClient = createClient({
 });
 async function fetchPosts() {
     const posts = await sanityClient.fetch('*[_type == "post"]{slug}');
-    const pages = await sanityClient.fetch('*[_type == "page"]{slug}');
     const posturls = posts.map((post) => post.slug.current);
-    const pageurls = pages.map((page) => page.slug.current);
-    return [...posturls, ...pageurls];
+    return [...posturls];
 }
-
+async function fetchPages() {
+    const pages = await sanityClient.fetch('*[_type == "page"]{slug}');
+    const pageurls = pages.map((page) => page.slug.current);
+    return [...pageurls];
+}
 /**
  * Nuxt configuration options.
  *
@@ -36,8 +38,9 @@ async function fetchPosts() {
  */
 export default defineNuxtConfig(async () => {
     const slugs = await fetchPosts();
+    const pages = await fetchPages();
     const dynamicRoutes = slugs.map((slug) => `/blog/${slug}`);
-
+    const dynamicPages = [...pages];
     return {
         target: "static",
         devtools: {
@@ -49,7 +52,7 @@ export default defineNuxtConfig(async () => {
         nitro: {
             prerender: {
                 crawlLinks: true,
-                routes: ["/", ...dynamicRoutes],
+                routes: ["/", ...dynamicRoutes, ...dynamicPages],
             },
         },
         routeRules: {
