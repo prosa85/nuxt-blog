@@ -79,6 +79,9 @@ export default defineNuxtConfig(async () => {
                 }),
             ],
         },
+        generate: {
+            routes: ["/", ...dynamicRoutes, ...dynamicPages],
+        },
         components: {
             global: true,
             dirs: ["~/components/modules", "~/components/"],

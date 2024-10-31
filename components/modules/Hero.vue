@@ -1,9 +1,13 @@
 <template>
   <div class="hero" :style="backimage">
-    <h1>FROM hero {{ moduledata.title }}</h1>
-    <p>{{ moduledata.description }}</p>
+    <h1 class="text-h1"> {{ moduledata.title }}</h1>
+    <div class="  d-flex justify-center">
+      <div class="w-750 mt-5 mb-5 text-h5">
+        <p>{{ moduledata.description }}</p>
+      </div>
+    </div>
 
-    <a :href="moduledata.learnMoreLink">Learn More</a>
+    <v-btn :href="moduledata.learnMoreLink" variant="flat">Learn More</v-btn>
   </div>
 </template>
 
@@ -42,5 +46,10 @@ export default {
   background-repeat: none;
   padding: 20%;
   text-align: center;
+}
+
+.hero h1 {
+  font-size: 42px;
+  color: rgb(114, 83, 26);
 }
 </style>

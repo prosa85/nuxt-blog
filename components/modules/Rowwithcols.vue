@@ -1,22 +1,26 @@
 <template>
-  <section class="col-section">
-    <v-row class="mb-10">
-      <v-col xs="12">
-        <h2 class="mt-5">{{ moduledata.title }}</h2>
-        <p>{{ moduledata.description }}</p>
-      </v-col>
-      <v-col xs="12">
-        <NuxtImg :src="imageUrlFor(moduledata.image).url()" format="webp" class="mt-2 mb-2"
-          sizes="100vw sm:50vw md:400px" />
-      </v-col>
-    </v-row>
-    <!-- <img :src="fields.image" alt="Image" v-if="fields.image" /> -->
-    <v-row class="mt-5" align="center">
-      <v-col v-for="col in moduledata.cols" xs>
-        <SanityContent :blocks="col.body" />
-      </v-col>
-    </v-row>
+  <section :style="getBackground()">
+    <v-container class="">
+      <v-row class="col-section mb-10" justify="space-around" align="center">
+        <v-col xs="12" class="w-20" cols="5">
+          <h2 class="mt-5 text-h4">{{ moduledata.title }}</h2>
+          <p class="mt-6">{{ moduledata.description }}</p>
 
+        </v-col>
+
+        <v-col xs="12" cols="5">
+          <NuxtImg :src="imageUrlFor(moduledata.image).url()" format="webp" class="mt-2 mb-2"
+            sizes="100vw sm:50vw md:300px" />
+        </v-col>
+      </v-row>
+      <!-- <img :src="fields.image" alt="Image" v-if="fields.image" /> -->
+      <v-row class="padding-row-botton" align="center">
+        <v-col v-for="col in moduledata.cols" xs class="col-content-block">
+          <SanityContent :blocks="col.body" />
+        </v-col>
+      </v-row>
+
+    </v-container>
   </section>
 </template>
 
@@ -46,21 +50,32 @@ export default {
     imageUrlFor(source) {
       return imageUrlBuilder(this.sanity.config).image(source);
     },
+    getBackground() {
+      return 'background:' + this.moduledata.backgroundColor.value
+    }
   }
 };
 </script>
 <style>
 .col-section {
-  padding: 120px 32px;
-  background-color: rgb(78, 82, 82);
+  padding-top: 60px;
   color: rgb(219, 219, 219);
   max-width: 1440px;
   margin: auto;
 }
 
+.padding-row-botton {
+  padding-bottom: 60px;
+}
+
+.col-content-block {
+  color: white
+}
+
 @media (max-width: 768px) {
   .col-section {
-    padding: 60px 32px;
+    padding: 50px 32px;
   }
+
 }
 </style>

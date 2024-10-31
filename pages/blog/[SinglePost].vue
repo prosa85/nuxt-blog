@@ -1,27 +1,19 @@
 <template>
-  <v-container class="content-container">
+  <v-container>
+    <div v-if="post" class="post-container">
+      <h1 class="text-h4 mb-4 w-lg-75">{{ post.title }}</h1>
+      <!-- <v-img width="" v-if="post.image" :src="post.image.asset.url"  class="mt-5 mb-10"></v-img> -->
+      <NuxtImg :src="post.image.asset.url" height="300" format="webp" class="mt-5 mb-10" />
+      <!-- <SanityImage :asset-id="post.image.asset._id" format="auto"></SanityImage> -->
+      <h6>By: <v-avatar size="45" class="ml-3 mr-2" v-if="authorImage" :image="authorImage"></v-avatar>
+        {{ post.author.name }}
+      </h6>
+      <div class="mt-5 post-content">
+        <!-- <PortableText :value="blocks" /> -->
+        <SanityContent :blocks="blocks" />
+      </div>
+    </div>
 
-    <v-row>
-      <!-- <div class="loading" v-if="loading">Loading...</div>
-
-      <div v-if="error" class="error">
-        {{ error }}
-      </div> -->
-
-      <v-col v-if="post" class="content">
-        <h1 class="text-h3 w-lg-66">{{ post.title }}</h1>
-        <!-- <v-img width="" v-if="post.image" :src="post.image.asset.url"  class="mt-5 mb-10"></v-img> -->
-        <NuxtImg :src="post.image.asset.url" height="600" width="600" format="webp" class="mt-5 mb-10" />
-        <!-- <SanityImage :asset-id="post.image.asset._id" format="auto"></SanityImage> -->
-        <h6>By: <v-avatar size="45" class="ml-3 mr-2" v-if="authorImage" :image="authorImage"></v-avatar>
-          {{ post.author.name }}
-        </h6>
-        <div class="mt-5 post-content">
-          <!-- <PortableText :value="blocks" /> -->
-          <SanityContent :blocks="blocks" />
-        </div>
-      </v-col>
-    </v-row>
   </v-container>
 </template>
 
@@ -113,8 +105,8 @@ export default {
   }
 }
 
-.content-container {
-  max-width: 1440px;
+.post-container {
+  max-width: 800px;
   margin: 120px auto 0;
 }
 </style>

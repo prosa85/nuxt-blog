@@ -1,14 +1,14 @@
 <template>
   <v-container class="content-container">
 
-    <h1 class="ma-6 text-h2 w-33">Welcome Altruist Sanity Blog</h1>
+    <h1 class="ma-6 text-h2 w-50">Welcome Altruist Sanity Blog</h1>
     <div class="loading" v-if="loading">Loading...</div>
     <div v-if="error" class="error">
       {{ error }}
     </div>
     <v-container v-else>
-      <v-row>
-        <v-col :lg="index == 0 ? 12 : 6" sm="12" v-for="(post, index ) in posts[page]" class="" :key="index">
+      <v-row class="content-container">
+        <v-col :lg="index == 0 ? 12 : 6" sm="12" v-for="(post, index ) in posts[page]" class="" :key="post._id">
           <PostCard :post="post" :firstCard="index == 0 ? true : false" />
         </v-col>
       </v-row>
@@ -39,9 +39,10 @@
 
 const countTotal = `count(*[_type =='post'])`;
 const perPage = 5;
-const firstQuery = `*[_type == "post"] | order(_id) [0..${perPage - 1}]{
+const firstQuery = `*[_type == "post"] | order(_id asc) [0..${perPage - 1}]{
   _id,
   title,
+  publishedAt,
   "image": mainImage{
   asset->{
   _id,
@@ -99,9 +100,10 @@ export default {
       if (!lastId) {
         return [];
       }
-      const nextQuery = `*[_type == "post" && _id > "${lastId}"] | order(_id) [0..${perPage - 1}]{
+      const nextQuery = `*[_type == "post" && _id > "${lastId}"] | order(_id asc) [0..${perPage - 1}]{
           _id,
           title,
+          publishedAt,
           "image": mainImage{
             asset->{
               _id,
@@ -120,7 +122,7 @@ export default {
 </script>
 <style>
 .content-container {
-  max-width: 1440px;
+  max-width: 1240px;
   margin: 120px auto 0;
 }
 </style>
