@@ -1,13 +1,12 @@
 <template>
   <v-container class="content-container">
-
     <h1 class="ma-6 text-h2 w-50">Welcome Altruist Sanity Blog</h1>
     <div class="loading" v-if="loading">Loading...</div>
     <div v-if="error" class="error">
       {{ error }}
     </div>
     <v-container v-else>
-      <v-row class="content-container">
+      <v-row class="">
         <v-col :lg="index == 0 ? 12 : 6" sm="12" v-for="(post, index ) in posts[page]" class="" :key="post._id">
           <PostCard :post="post" :firstCard="index == 0 ? true : false" />
         </v-col>
@@ -123,6 +122,6 @@ export default {
 <style>
 .content-container {
   max-width: 1240px;
-  margin: 120px auto 0;
+  margin: 60px auto 0;
 }
 </style>
