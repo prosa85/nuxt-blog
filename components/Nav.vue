@@ -4,9 +4,32 @@
       <router-link to="/" class="mt-2 mr-5">
         <v-img width="150px" class="ml-3" src="/assets/Altruist-logo_full-color-1.webp" to="/"></v-img>
       </router-link>
-      <v-btn v-for="menu in menus.menu" :to="menu.url">
-        {{ menu.label }}
-      </v-btn>
+      <!-- {{ menus.menu }} -->
+      <template v-for="menu in menus.menu">
+
+        <v-menu v-if="menu.children">
+          <v-list>
+            <v-list-item v-for="child in menu.childrenlist">
+              <v-list-item :to="child.url" :target="child.target">
+                {{ child.label }}
+              </v-list-item>
+            </v-list-item>
+          </v-list>
+
+          <template v-slot:activator="{ props }">
+            <v-btn v-bind="props">
+              {{ menu.label }}
+            </v-btn>
+          </template>
+
+        </v-menu>
+        <v-btn v-else :to="menu.url" :target="menu.target" variant="flat">
+          {{ menu.label }}
+        </v-btn>
+      </template>
+
+
+
     </v-toolbar-items>
   </v-toolbar>
 </template>
